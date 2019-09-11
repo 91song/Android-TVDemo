@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.owen.adapter.CommonRecyclerViewAdapter;
 import com.owen.adapter.CommonRecyclerViewHolder;
+import com.owen.focus.AbsFocusBorder;
 import com.owen.focus.FocusBorder;
 import com.owen.tvrecyclerview.widget.StaggeredGridLayoutManager;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -117,13 +118,13 @@ public class TvRecyclerViewActivity extends AppCompatActivity {
                 // .noBreathing()
                 // 呼吸灯效果时长
                 .breathingDuration(3000)
+                .animMode(AbsFocusBorder.Mode.NOLL)
                 .build(this);
     }
 
     private void initTvRecyclerView() {
         mTvRecyclerView.setSpacingWithMargins(12, 12);
         mTvRecyclerView.setOnItemListener(new TvRecyclerView.OnItemListener() {
-
             @Override
             public void onItemPreSelected(TvRecyclerView parent, View itemView, int position) {
 
@@ -141,7 +142,6 @@ public class TvRecyclerViewActivity extends AppCompatActivity {
             }
         });
         mTvRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -151,6 +151,8 @@ public class TvRecyclerViewActivity extends AppCompatActivity {
                         break;
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Glide.with(TvRecyclerViewActivity.this).resumeRequests();
+                        break;
+                    default:
                         break;
                 }
             }
@@ -193,18 +195,17 @@ public class TvRecyclerViewActivity extends AppCompatActivity {
                     case View.FOCUS_RIGHT:
                         System.out.println("right");
                         break;
+                    default:
+                        break;
                 }
                 return false;
             }
         });
         mTvRecyclerView.setOnLoadMoreListener(new TvRecyclerView.OnLoadMoreListener() {
-
             @Override
-            public boolean onLoadMore() {
-                mTvRecyclerView.setLoadingMore(true);
+            public void onLoadMore() {
                 mAdapter.appendDatas(getData(10));
-                mTvRecyclerView.setLoadingMore(false);
-                return mAdapter.getItemCount() < 100;
+                mTvRecyclerView.setHasMoreData(mAdapter.getItemCount() < 100);
             }
         });
     }

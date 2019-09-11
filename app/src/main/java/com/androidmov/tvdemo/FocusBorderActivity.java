@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.owen.focus.AbsFocusBorder;
 import com.owen.focus.FocusBorder;
 
 public class FocusBorderActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,8 @@ public class FocusBorderActivity extends AppCompatActivity {
                 // .noBreathing()
                 // 呼吸灯效果时长
                 .breathingDuration(3000)
+                //边框动画模式
+                .animMode(AbsFocusBorder.Mode.NOLL)
                 .build(this);
         focusBorder.boundGlobalFocusListener(new FocusBorder.OnFocusCallback() {
             @Nullable
